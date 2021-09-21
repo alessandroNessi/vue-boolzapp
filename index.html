@@ -19,22 +19,44 @@
         <title>Document</title>
     </head>
     <body>
-        <div id="root">
-            <div class="container">
-                <div class="left">
-                    <header>
+        <div id="root" class="container">
+            <div class="left">
+                <header class="header">
+                    <div class="avatar">
+                        <span>img</span>
+                        <span>name</span>
+                    </div>
+                    <div class="options">options</div>
+                </header>
+                <nav>
+                    <div class="notyfyBanner">
+                        <span class="icon">bell</span>
+                        <div class="textContainer">
+                            <h2>notifiche</h2>
+                            <p>attiva notifiche</p>
+                        </div>
+                    </div>
+                    <input class="search" type="text">
+                    <ul class="contactList">
 
-                    </header>
-                    <nav>
+                    </ul>
+                </nav>
+            </div>
+            <div class="right">
+                <main>
+                    <div class="contactInfo, header">
 
-                    </nav>
-                </div>
-                <div class="right">
-                    <main>
+                    </div>
+                    <div class="messageContainer">
 
-                    </main>
-                </div>
-            </div>    
+                    </div>
+                    <div class="messageInputForm">
+                        <span>smile</span>
+                        <input type="text">
+                        <span>mic</span>
+                    </div>
+                </main>
+            </div>   
         </div>
         <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
         <script src="scripts/contacts.js"></script>

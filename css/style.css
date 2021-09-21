@@ -5,3 +5,72 @@
     box-sizing: border-box;
     background-color: rgba(255,0,0,0.1);
 }
+body{
+    background: linear-gradient(#009688 15%, #d7dbd6 15%);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.container{
+    width: 80%;
+    height: 95%;
+    display: flex;
+    max-width: 1600px;
+}
+.right, .left{
+    height: 100%;
+}
+.left{
+    width: 33%;
+
+}
+.right{
+    flex-grow: 1;
+}
+
+/* HEADER */
+.header{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #eaeaea;
+    height: 70px;
+}
+
+/* NAV */
+nav{
+    display: flex;
+    flex-direction: column;
+    height: calc(100% - 70px);
+    background-color: white;
+}
+.notyfyBanner{
+    background-color: #8edafc;
+    padding: 15px;
+    display: flex;
+}
+.contactList{
+    flex-grow: 1;
+}
+.search{
+    margin: 5px;
+}
+
+/* MAIN */
+main{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.messageContainer{
+    background-image: url("../media/mine.jpg");
+    flex-grow: 1;
+}
+.messageInputForm{
+    display: flex;
+    padding: 5px;
+    justify-content: space-around;
+    background-color: #f3eeea;
+}
