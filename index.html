@@ -20,16 +20,23 @@
     </head>
     <body>
         <div id="root" class="container">
+
+
+            <!-- LEFT -->
             <div class="left">
-                <header class="header">
+
+                <!-- HEADER -->
+                <header class="header alignSons">
                     <div class="avatar">
                         <span>img</span>
                         <span>name</span>
                     </div>
-                    <div class="options">options</div>
+                    <div class="options"><i class="fas fa-circle-notch"></i><i class="fas fa-comment-alt"></i><i class="fas fa-ellipsis-v"></i></div>
                 </header>
+
+                <!-- NAV -->
                 <nav>
-                    <div class="notyfyBanner">
+                    <div class="notyfyBanner alignSons">
                         <span class="icon">bell</span>
                         <div class="textContainer">
                             <h2>notifiche</h2>
@@ -37,23 +44,38 @@
                         </div>
                     </div>
                     <input class="search" type="text">
-                    <ul class="contactList">
 
+                    <!-- CONTACTLIST -->
+                    <ul class="contactList">
+                        <li class="userInList"><img src="" alt=""> nome</li>
                     </ul>
                 </nav>
             </div>
+
+            
+            <!-- RIGHT -->
             <div class="right">
                 <main>
-                    <div class="contactInfo, header">
 
+                    <!-- MESSAGEHEADER -->
+                    <div class="contactInfo header alignSons">
+                        <div class="avatar">
+                            <span>img</span>
+                            <span>name</span>
+                        </div>
+                        <div class="options"><i class="fas fa-search"></i><i class="fas fa-paperclip"></i><i class="fas fa-ellipsis-v"></i></div>
                     </div>
+
+                    <!-- MESSAGECONTAINER -->
                     <div class="messageContainer">
 
                     </div>
-                    <div class="messageInputForm">
-                        <span>smile</span>
-                        <input type="text">
-                        <span>mic</span>
+
+                    <!-- MESSAGEINPUT -->
+                    <div class="messageInputForm alignSons">
+                        <span><i class="far fa-smile"></i></span>
+                        <input type="text" placeholder="Scrivi un messaggio">
+                        <span><i class="fas fa-microphone"></i></span>
                     </div>
                 </main>
             </div>   
