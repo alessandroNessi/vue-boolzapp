@@ -52,9 +52,11 @@
 
                     <!-- CONTACTLIST -->
                     <ul class="contactList">
-                        <li class="userInList">
-                            <div class="mediumCircle"><img class="avatarImg" src="media/avatar_io.jpg" alt="myImage"></div>
-                                <h4>Nome utente</h4>
+                        <li @click="selectUser(index)" v-for="(contact, index) in contacts" :key="index" class="userInList">
+                            <div class="mediumCircle">
+                                <img class="avatarImg" :src="'media/avatar'+contact.avatar+'.jpg'" alt="myImage">
+                            </div>
+                            <h4>{{contact.name}}</h4>
                         </li>
                     </ul>
                 </nav>
@@ -79,14 +81,14 @@
 
                     <!-- MESSAGECONTAINER -->
                     <div class="messageContainer">
-                        <div class="message sent">
-                            <p class="messageContent">Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti consectetur quibusdam odio! Commodi deleniti iste nulla fugit, magni vel explicabo doloribus, similique iusto ipsum expedita veritatis illo hic, consectetur placeat.</p>
-                            <p class="messageDate">24/11/1988 10:55AM</p>
+                        <div v-for="(message, index) in screenMessages" :key="index" :class="'message '+message.status">
+                            <p class="messageContent">{{message.message}}</p>
+                            <p class="messageDate">{{message.date}}</p>
                         </div>
-                        <div class="message received">
+                        <!-- <div class="message received">
                             <p class="messageContent">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Molestias in nam quibusdam reiciendis maiores vel magni assumenda. Sequi, officiis assumenda, autem ratione illum sint ducimus placeat quae ipsa recusandae distinctio.</p>
                             <p class="messageDate">24/11/1988 10:55AM</p>
-                        </div>
+                        </div> -->
                     </div>
 
                     <!-- MESSAGEINPUT -->
@@ -99,7 +101,7 @@
             </div>   
         </div>
         <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
-        <script src="scripts/contacts.js"></script>
+        <!-- <script src="scripts/contacts.js"></script> -->
         <script src="scripts/script.js"></script>
     </body>
 </html>
