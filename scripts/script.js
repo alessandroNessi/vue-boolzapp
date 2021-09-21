@@ -90,5 +90,15 @@ var app = new Vue ({
             this.screenMessages=this.contacts[index].messages;
             console.log(this.screenMessages);
         },
+        sendMessage(){
+            let currentMessage = document.getElementById("messageInput").value;
+            if(currentMessage!=""){
+                this.screenMessages.push({
+                    date: 'temp',
+                    message: currentMessage,
+                    status: 'sent'
+                });
+            }
+        }
     }
 });

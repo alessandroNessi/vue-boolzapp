@@ -85,16 +85,12 @@
                             <p class="messageContent">{{message.message}}</p>
                             <p class="messageDate">{{message.date}}</p>
                         </div>
-                        <!-- <div class="message received">
-                            <p class="messageContent">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Molestias in nam quibusdam reiciendis maiores vel magni assumenda. Sequi, officiis assumenda, autem ratione illum sint ducimus placeat quae ipsa recusandae distinctio.</p>
-                            <p class="messageDate">24/11/1988 10:55AM</p>
-                        </div> -->
                     </div>
 
                     <!-- MESSAGEINPUT -->
                     <div class="messageInputForm alignSons">
                         <span><i class="far fa-smile"></i></span>
-                        <input type="text" placeholder="Scrivi un messaggio">
+                        <input id="messageInput" @keyup.enter="sendMessage()" type="text" placeholder="Scrivi un messaggio">
                         <span><i class="fas fa-microphone"></i></span>
                     </div>
                 </main>
