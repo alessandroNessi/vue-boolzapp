@@ -174,3 +174,36 @@ main{
 .selected{
     background-color: #e9ebeb;
 }
+.messageContainer{
+    padding: 50px 90px;
+    display: flex;
+    flex-direction: column;
+}
+.sent{
+    align-self: flex-start;
+    background-color: white;
+}
+.received{
+    align-self: flex-end;
+    background-color: #d5f9ba;
+}
+.messageContent{
+    justify-self: center;
+    align-self: flex-start;
+    padding: 15px 15px 10px 15px;
+}
+.messageDate{
+    align-self: flex-end;
+    justify-self: flex-end;
+    color: #b6b9bb;
+    font-size: 10px;
+}
+.message{
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    padding: 5px;
+    max-width: calc(50% - 100px);/* i leave some space between right and left col*/
+    margin-bottom: 5px;
+    min-width: 300px;
+}
