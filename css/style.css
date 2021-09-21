@@ -28,6 +28,7 @@ body{
 }
 .right{
     flex-grow: 1;
+    border-left: 1px solid #d6d6d6;
 }
 .fas, .far{
     font-size: 22px;
@@ -39,6 +40,18 @@ body{
 input{
     border: 0px;
     border-radius: 5px;
+}
+.smallCircle{
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
+    overflow: hidden;
+}
+.mediumCircle{
+    width: 60px;
+    height: 60px;
+    border-radius: 30px;
+    overflow: hidden;
 }
 /* HEADER */
 .header{
@@ -56,6 +69,9 @@ input{
 .alignSons>*{
     display: flex;
     align-items: center;
+}
+.avatarImg{
+    width: 100%;
 }
 
 /* NAV */
@@ -97,23 +113,25 @@ input.search{
     flex-grow: 1;
 }
 .search{
-    /* display: flex;
-    justify-content: center; */
     padding:5px;
     line-height: 40px;
 }
-.circleBell{
-    width: 50px;
-    height: 50px;
-    border-radius: 25px;
-    text-align: center;
+.bell{
     background-color: white;
+    text-align: center;
 }
-.circleBell .fas{
+.bell .fas{
     color: #8edafc;
     line-height: 50px;
     width: 100%;
     vertical-align: middle;
+}
+.userInList{
+    display: flex;
+    padding: 10px;
+}
+.userInList h4{
+    margin-left: 20px;
 }
 
 /* MAIN */
@@ -140,7 +158,7 @@ main{
     margin-left: 10px;
     line-height: 20px;
 }
-.textContainer .subtitle{
+.notyfyBanner .subtitle{
     text-decoration: underline;
 }
 .messageInputForm input{
