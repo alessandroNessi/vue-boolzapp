@@ -30,10 +30,10 @@ body{
     flex-grow: 1;
 }
 .fas, .far{
-    font-size: 24px;
+    font-size: 22px;
 }
 .subtitle{
-    font-size: 10px;
+    font-size: 13px;
     color: #6b7376;
 }
 input{
@@ -53,7 +53,7 @@ input{
     color: #b1b1b1;
     margin: 0 10px;
 }
-.alignSons *{
+.alignSons>*{
     display: flex;
     align-items: center;
 }
@@ -73,8 +73,47 @@ nav{
 .contactList{
     flex-grow: 1;
 }
+.searchContainer{
+    width: 100%;
+    padding: 10px;
+    background-color: #fafafa;
+    display: flex;
+    justify-content: center;
+}
+.search.fas{
+    height: 100%;
+    color: #b6b9bb;
+    font-size: 14px;
+    padding: 5px 15px;
+    border: 1px solid #f5f5f5;
+    background-color: white;
+    margin-right: 0px;
+}
+input.search{
+    height: 100%;
+    border-radius: 0;
+    border: 1px solid #f5f5f5;
+    border-left: 0px;
+    flex-grow: 1;
+}
 .search{
-    margin: 5px;
+    /* display: flex;
+    justify-content: center; */
+    padding:5px;
+    line-height: 40px;
+}
+.circleBell{
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
+    text-align: center;
+    background-color: white;
+}
+.circleBell .fas{
+    color: #8edafc;
+    line-height: 50px;
+    width: 100%;
+    vertical-align: middle;
 }
 
 /* MAIN */
@@ -93,6 +132,16 @@ main{
     justify-content: space-around;
     background-color: #f3eeea;
     height: 70px;
+}
+.textContainer{
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    margin-left: 10px;
+    line-height: 20px;
+}
+.textContainer .subtitle{
+    text-decoration: underline;
 }
 .messageInputForm input{
     flex-grow: 0.9;
