@@ -228,6 +228,7 @@ main .hiddenMenu{
     right: .625rem;
     text-align: end;
     display: none;
+    z-index: 1;
 }
 main .hiddenMenu li{
     text-align: start;
