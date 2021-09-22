@@ -70,10 +70,10 @@
                     <!-- MESSAGEHEADER -->
                     <div class="contactInfo header alignSons">
                         <div class="avatar">
-                            <div class="smallCircle"><img class="avatarImg" src="media/avatar_1.jpg" alt="myImage1"></div>
+                            <div class="smallCircle"><img class="avatarImg" :src="'media/avatar'+userResponding.avatar+'.jpg'" alt="myImage1"></div>
                             <div class="textContainer">
-                                <h4>Nome utente1</h4>
-                                <p class="subtitle">Attiva notifiche desktop</p>
+                                <h4>{{userResponding.name}}</h4>
+                                <p class="subtitle">Ultimo accesso alle 19.46</p>
                             </div>
                         </div>
                         <div class="options"><i class="fas fa-search"></i><i class="fas fa-paperclip"></i><i class="fas fa-ellipsis-v"></i></div>

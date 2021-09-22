@@ -1,6 +1,7 @@
 var app = new Vue ({
     el:"#root",
     data:{
+        userResponding:{},
         screenMessages:[{}],
         contacts: [
             {
@@ -87,8 +88,8 @@ var app = new Vue ({
     },
     methods:{
         selectUser(index){
-            this.screenMessages=this.contacts[index].messages;
-            console.log(this.screenMessages);
+            this.userResponding=this.contacts[index];
+            this.screenMessages=this.userResponding.messages;
         },
         sendMessage(){
             let currentMessage = document.getElementById("messageInput").value;
@@ -100,5 +101,8 @@ var app = new Vue ({
                 });
             }
         }
+    },
+    mounted (){
+        this.userResponding=this.contacts[0];
     }
 });
