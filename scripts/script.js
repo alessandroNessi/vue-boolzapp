@@ -3,6 +3,7 @@ var app = new Vue ({
     data:{
         userResponding:{},
         screenMessages:[{}],
+        filterInput:"",
         contacts: [
             {
                 name: 'Michele',
@@ -104,7 +105,7 @@ var app = new Vue ({
                     temp="ciao, sto bene, tu?";
                 }else if(currentMessage.includes("ciao")||currentMessage.includes("hello")){
                     temp="ciao";
-                }else if(currentMessage.includes("tempo")||currentMessage.includes("sole")||currentMessage.includes("nuvoloso")||currentMessage.includes("piove")){
+                }else if(currentMessage.includes("meteo")||currentMessage.includes("tempo")||currentMessage.includes("sole")||currentMessage.includes("nuvoloso")||currentMessage.includes("piove")){
                     temp="beh, quì c'è il sole";
                 }else if(currentMessage.includes("a bird")||currentMessage.includes("la parola")||currentMessage.includes("the word")||currentMessage.includes("un uccello")){
                     temp="well everybody knows that the bird is the word!";
@@ -116,16 +117,21 @@ var app = new Vue ({
                         status: 'received'
                     });
                 }, 2000);
+                document.getElementById("messageInput").value="";
             }
         },
         getCurrentTime(){
             var today = new Date();
             return (today.getDate()+'/'+(today.getMonth()+1)+'/'+today.getFullYear() +"  "+today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds());
+        },
+        filterUser(){
+            let userToFilter = document.getElementById("filterInput").value;
+            if(userToFilter!=""){
+                alert("cippa");
+            }
         }
     },
     mounted (){
-        this.userResponding=this.contacts[0];
-        this.screenMessages=this.userResponding.messages;
-        // selectUser('0');
+        this.selectUser(0);
     }
 });
