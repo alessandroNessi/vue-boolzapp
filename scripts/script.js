@@ -129,8 +129,8 @@ var app = new Vue ({
             return (today.getDate()+'/'+(today.getMonth()+1)+'/'+today.getFullYear() +"  "+today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds());
         },
         filterUser(){
-            let userToFilter = document.getElementById("filterInput").value;
-            this.filteredContacts=this.contacts.filter(element=>element.name.includes(userToFilter));
+            let userToFilter = document.getElementById("filterInput").value.toLowerCase();
+            this.filteredContacts=this.contacts.filter(element=>element.name.toLowerCase().includes(userToFilter));
             console.log(this.filteredContacts);
             console.log(userToFilter);
         }
