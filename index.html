@@ -52,7 +52,7 @@
 
                     <!-- CONTACTLIST -->
                     <ul class="contactList">
-                        <li @click="selectUser(index)" v-for="(contact, index) in filteredContacts" :key="index" class="userInList">
+                        <li @click="selectUser(index), changeIndex(index)" v-for="(contact, index) in filteredContacts" :key="index" :class="{userInList: true, selected: index==selectedIndex}">
                             <div class="mediumCircle">
                                 <img class="avatarImg" :src="'media/avatar'+contact.avatar+'.jpg'" alt="myImage">
                             </div>

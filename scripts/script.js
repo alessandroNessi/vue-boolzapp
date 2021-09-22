@@ -4,6 +4,7 @@ var app = new Vue ({
         userResponding:{},
         screenMessages:[{}],
         filteredContacts: [{}],
+        selectedIndex:0,
         contacts: [
             {
                 name: 'Michele',
@@ -88,6 +89,9 @@ var app = new Vue ({
         ]
     },
     methods:{
+        changeIndex(index){
+            this.selectedIndex=index;
+        },
         selectUser(index){
             this.userResponding=this.filteredContacts[index];
             this.screenMessages=this.userResponding.messages;
