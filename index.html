@@ -81,7 +81,14 @@
 
                     <!-- MESSAGECONTAINER -->
                     <div class="messageContainer">
-                        <div v-for="(message, index) in screenMessages" :key="index" :class="'message '+message.status">
+                        <div @mouseleave="hideFunctions(index)" class="message" v-for="(message, index) in screenMessages" :key="index" :class="'message '+message.status">
+                            <div class="hiddenMenu">
+                                <i class="fas fa-ellipsis-v" @click="showHiddenMenu(index)"></i>
+                                <ul class="hiddenFunctions d-none">
+                                    <li>Info messaggio</li>
+                                    <li @click="deleteMessage(index)">Cancella messaggio</li>
+                                </ul>
+                            </div>
                             <p class="messageContent">{{message.message}}</p>
                             <p class="messageDate">{{message.date}}</p>
                         </div>

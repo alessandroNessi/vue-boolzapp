@@ -133,6 +133,19 @@ var app = new Vue ({
             this.filteredContacts=this.contacts.filter(element=>element.name.toLowerCase().includes(userToFilter));
             console.log(this.filteredContacts);
             console.log(userToFilter);
+        },
+        showHiddenMenu(index){
+            if(document.getElementsByClassName("hiddenFunctions")[index].style.display == "none"){
+                document.getElementsByClassName("hiddenFunctions")[index].style.display = "block";
+            }else{
+                document.getElementsByClassName("hiddenFunctions")[index].style.display = "none";
+            }
+        },
+        hideFunctions(index){
+            document.getElementsByClassName("hiddenFunctions")[index].style.display = "none";
+        },
+        deleteMessage(index){
+            this.screenMessages.splice(index,1);
         }
     },
     mounted (){
