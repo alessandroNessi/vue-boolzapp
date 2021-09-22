@@ -148,8 +148,11 @@ var app = new Vue ({
             this.screenMessages.splice(index,1);
         }
     },
-    mounted (){
+    created (){
         this.filteredContacts=this.contacts.filter(element=>element.name.includes(""));
         this.selectUser(0);
+    },
+    updated(){
+        document.getElementsByClassName("messageContainer")[0].scrollTop = document.getElementsByClassName("messageContainer")[0].scrollHeight;
     }
 });
