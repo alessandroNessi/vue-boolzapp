@@ -95,7 +95,7 @@ var app = new Vue ({
             let currentMessage = document.getElementById("messageInput").value;
             if(currentMessage!=""){
                 this.screenMessages.push({
-                    date: 'temp',
+                    date: this.getCurrentTime(),
                     message: currentMessage,
                     status: 'sent'
                 });
@@ -104,18 +104,28 @@ var app = new Vue ({
                     temp="ciao, sto bene, tu?";
                 }else if(currentMessage.includes("ciao")||currentMessage.includes("hello")){
                     temp="ciao";
+                }else if(currentMessage.includes("tempo")||currentMessage.includes("sole")||currentMessage.includes("nuvoloso")||currentMessage.includes("piove")){
+                    temp="beh, quì c'è il sole";
+                }else if(currentMessage.includes("a bird")||currentMessage.includes("la parola")||currentMessage.includes("the word")||currentMessage.includes("un uccello")){
+                    temp="well everybody knows that the bird is the word!";
                 }
                 setTimeout(()=>{
                     this.screenMessages.push({
-                        date: 'temp',
+                        date: this.getCurrentTime(),
                         message: temp,
                         status: 'received'
                     });
-                }, 300);
+                }, 2000);
             }
+        },
+        getCurrentTime(){
+            var today = new Date();
+            return (today.getDate()+'/'+(today.getMonth()+1)+'/'+today.getFullYear() +"  "+today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds());
         }
     },
     mounted (){
         this.userResponding=this.contacts[0];
+        this.screenMessages=this.userResponding.messages;
+        // selectUser('0');
     }
 });
