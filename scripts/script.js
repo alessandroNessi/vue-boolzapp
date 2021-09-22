@@ -99,6 +99,19 @@ var app = new Vue ({
                     message: currentMessage,
                     status: 'sent'
                 });
+                let temp="scusa non ho capito";
+                if(currentMessage.includes("come stai")||currentMessage.includes("come va")){
+                    temp="ciao, sto bene, tu?";
+                }else if(currentMessage.includes("ciao")||currentMessage.includes("hello")){
+                    temp="ciao";
+                }
+                setTimeout(()=>{
+                    this.screenMessages.push({
+                        date: 'temp',
+                        message: temp,
+                        status: 'received'
+                    });
+                }, 300);
             }
         }
     },
