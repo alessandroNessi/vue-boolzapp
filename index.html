@@ -47,12 +47,12 @@
                     </div>
                     <div class="searchContainer">
                         <i class="search fas fa-search"></i>
-                        <input id="filterInput" @change="filterUser()" v-model="filterInput" class="search" type="text" placeholder="Cerca o inizia una nuova chat">
+                        <input id="filterInput" @keyup="filterUser()" class="search" type="text" placeholder="Cerca o inizia una nuova chat">
                     </div>
 
                     <!-- CONTACTLIST -->
                     <ul class="contactList">
-                        <li @click="selectUser(index)" v-for="(contact, index) in contacts" :key="index" class="userInList">
+                        <li @click="selectUser(index)" v-for="(contact, index) in filteredContacts" :key="index" class="userInList">
                             <div class="mediumCircle">
                                 <img class="avatarImg" :src="'media/avatar'+contact.avatar+'.jpg'" alt="myImage">
                             </div>

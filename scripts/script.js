@@ -3,7 +3,7 @@ var app = new Vue ({
     data:{
         userResponding:{},
         screenMessages:[{}],
-        filterInput:"",
+        filteredContacts: [{}],
         contacts: [
             {
                 name: 'Michele',
@@ -89,7 +89,7 @@ var app = new Vue ({
     },
     methods:{
         selectUser(index){
-            this.userResponding=this.contacts[index];
+            this.userResponding=this.filteredContacts[index];
             this.screenMessages=this.userResponding.messages;
         },
         sendMessage(){
@@ -126,12 +126,13 @@ var app = new Vue ({
         },
         filterUser(){
             let userToFilter = document.getElementById("filterInput").value;
-            if(userToFilter!=""){
-                alert("cippa");
-            }
+            this.filteredContacts=this.contacts.filter(element=>element.name.includes(userToFilter));
+            console.log(this.filteredContacts);
+            console.log(userToFilter);
         }
     },
     mounted (){
+        this.filteredContacts=this.contacts.filter(element=>element.name.includes(""));
         this.selectUser(0);
     }
 });
