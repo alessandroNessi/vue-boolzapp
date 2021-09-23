@@ -8,12 +8,12 @@ var app = new Vue ({
         filteredContacts: [{}],
         selectedIndex:0,
         recording: false,
+        recordingTimeOut:{},
         contacts: [
             {
                 name: 'Michele',
                 avatar: '_1',
                 visible: true,
-                // audioObj: new Audio,
                 messages: [
                     {
                         date: '10/01/2020 15:30:55',
@@ -184,13 +184,15 @@ var app = new Vue ({
                             temp.message= new Audio(audioUrl);
                             this.screenMessages.push(temp);
                         });
-                        setTimeout(() => {
+                        this.recordingTimeOut = setTimeout(() => {
                             this.mediaRecorder.stop();
                             this.recording=false;
-                        }, 10000);
+                        }, 30000);
                     });
             }else{
                 this.mediaRecorder.stop();
+                clearTimeout(this.recordingTimeOut);
+                this.recording=false;
             }
         },
         audioPlay(index){
