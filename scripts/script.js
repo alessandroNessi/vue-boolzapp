@@ -149,6 +149,7 @@ var app = new Vue ({
                     });
                 }, 2000);
                 document.getElementById("messageInput").value="";
+                this.switchTopContact();
             }
         },
 
@@ -206,6 +207,7 @@ var app = new Vue ({
                             const audioUrl = URL.createObjectURL(audioBlob);
                             temp.message= new Audio(audioUrl);
                             this.screenMessages.push(temp);
+                            this.switchTopContact();
                         });
                         this.recordingTimeOut = setTimeout(() => {
                             this.mediaRecorder.stop();
@@ -232,6 +234,21 @@ var app = new Vue ({
                 return false;
             }
             return true;
+        },
+
+        /**switch contacs on top based on the last message sent*/
+        switchTopContact(){
+            if(this.userResponding.name!=this.contacts[0].name){
+                let temp=this.contacts[0], index=0, found=false;
+                while( index<this.contacts.length-1 && found==false){
+                    index++;
+                    (this.contacts[index].name==this.userResponding.name)? found=true : "";
+                }
+                this.contacts[0]=this.userResponding;
+                this.contacts[index]=temp;
+                this.filterUser();
+                this.changeIndex(0);
+            }
         }
     },
 
