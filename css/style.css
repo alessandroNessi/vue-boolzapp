@@ -206,12 +206,29 @@ main{
 }
 .message{
     display: flex;
+    position: relative;
     flex-direction: column;
     border-radius: .625rem;
     padding: .3125rem;
     max-width: calc(100% - 1.875rem);/* i leave some space between right and left col*/
-    margin-bottom: .3125rem;
+    margin-bottom: .125rem;
     min-width: 18.75rem;
+}
+.triangle__msg{
+    position: absolute;
+    top: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 10px 10px 0 10px;
+}
+.triangle__sent{
+    right: -10px;
+    border-color: #d5f9ba transparent transparent transparent;
+}
+.triangle__received{
+    left: -10px;
+    border-color: #fff transparent transparent transparent;
 }
 .message{
     position: relative;
@@ -247,9 +264,9 @@ main .hiddenMenu .fas{
     /* opacity: 0; */
 }
 .playBar{
-    height: 4px;
-    border-radius: 2px;
-    width: 70px;
+    height: .25rem;
+    border-radius: .125rem;
+    width: 4.375rem;
     /* margin: auto; */
     background-color: lightblue;
 }

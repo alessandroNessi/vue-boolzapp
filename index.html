@@ -82,6 +82,7 @@
                     <!-- MESSAGECONTAINER -->
                     <div class="messageContainer">
                         <div @mouseleave="hideFunctions(index)" class="message" v-for="(message, index) in screenMessages" :key="index" :class="'message '+message.status">
+                            <div v-if="!sameStatusPrevMsg(index)" class="triangle__msg" :class="{triangle__sent: message.status=='sent', triangle__received: message.status=='received'}"></div>
                             <div class="hiddenMenu">
                                 <i class="fas fa-ellipsis-v" @click="showHiddenMenu(index)"></i>
                                 <ul class="hiddenFunctions d-none">

@@ -1,6 +1,8 @@
 // var audioObj= new Audio;
 var app = new Vue ({
     el:"#root",
+
+    //*******************DATA
     data:{
         userResponding:{},
         mediaRecorder:{},
@@ -103,14 +105,22 @@ var app = new Vue ({
             },
         ]
     },
+
+    //*******************METHODS
     methods:{
+        
+        /**change index on contact clinck in the left screen */
         changeIndex(index){
             this.selectedIndex=index;
         },
+
+        /**select the user to print messages on right screen */
         selectUser(index){
             this.userResponding=this.filteredContacts[index];
             this.screenMessages=this.userResponding.messages;
         },
+
+        /**send the message to user on enter in the input bottom form */
         sendMessage(){
             let currentMessage = document.getElementById("messageInput").value;
             if(currentMessage!=""){
@@ -134,22 +144,29 @@ var app = new Vue ({
                     this.screenMessages.push({
                         date: this.getCurrentTime(),
                         message: temp,
-                        status: 'received'
+                        status: 'received',
+                        type: 'text'
                     });
                 }, 2000);
                 document.getElementById("messageInput").value="";
             }
         },
+
+        /**return current time */
         getCurrentTime(){
             var today = new Date();
             return (today.getDate()+'/'+(today.getMonth()+1)+'/'+today.getFullYear() +"  "+today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds());
         },
+
+        /**filter user based on the top left input search form */
         filterUser(){
             let userToFilter = document.getElementById("filterInput").value.toLowerCase();
             this.filteredContacts=this.contacts.filter(element=>element.name.toLowerCase().includes(userToFilter));
             console.log(this.filteredContacts);
             console.log(userToFilter);
         },
+
+        /**show the hidden menu in messages to get info or delete 'em */
         showHiddenMenu(index){
             if(document.getElementsByClassName("hiddenFunctions")[index].style.display == "none"){
                 document.getElementsByClassName("hiddenFunctions")[index].style.display = "block";
@@ -157,12 +174,18 @@ var app = new Vue ({
                 document.getElementsByClassName("hiddenFunctions")[index].style.display = "none";
             }
         },
+
+        /**hide the hidden message menu */
         hideFunctions(index){
             document.getElementsByClassName("hiddenFunctions")[index].style.display = "none";
         },
+
+        /**thelete the 'index' message */
         deleteMessage(index){
             this.screenMessages.splice(index,1);
         },
+
+        /**record an audio and put it in the user's messages, has 30s timeout can be stopped by clicking again on it */
         recordAudio(){
             if(this.recording==false){
                 this.recording=true;
@@ -195,15 +218,30 @@ var app = new Vue ({
                 this.recording=false;
             }
         },
+
+        /**start the play of the audio item in the selected index */
         audioPlay(index){
             this.screenMessages[index].message.play();
+        },
+
+        /**check if the message before is same status as this */
+        sameStatusPrevMsg(index){
+            if(index==0){
+                return false;
+            }else if(this.screenMessages[index].status!=this.screenMessages[index-1].status){
+                return false;
+            }
+            return true;
         }
     },
+
+    //*******************VUESTATUS
     created (){
         this.filteredContacts=this.contacts.filter(element=>element.name.includes(""));
         this.selectUser(0);
     },
     updated(){
+        //scroll to the bottom message just after the uptdate page
         document.getElementsByClassName("messageContainer")[0].scrollTop = document.getElementsByClassName("messageContainer")[0].scrollHeight;
     }
 });
