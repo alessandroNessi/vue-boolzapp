@@ -90,7 +90,7 @@
                             </div>
                             <canvas class="d-none" id="canvas">
                             </canvas>
-                            <div class="output">
+                            <div class="output d-none">
                               <img id="photo" alt="The screen capture will appear in this box.">
                             </div>
 
@@ -104,9 +104,9 @@
                                     <li @click="deleteMessage(index)">Cancella messaggio</li>
                                 </ul>
                             </div>
-                            <p v-if="message.type=='text'" class="messageContent">{{message.message}}</p>
-                            <p v-else="message.type=='pic'" class="messageContent"><img :src="message.message" class="messageImg"></p>
-                            <!-- <p v-else-if="message.type=='audio'" @click="audioPlay(index)" class="messageContent"><i class="fas fa-play"></i><div classe="playBar"></div></p> -->
+                            <div v-if="message.type=='text'" class="messageContent">{{message.message}}</div>
+                            <div v-else-if="message.type=='pic'" class="messageContent"><img :src="message.message" class="messageImg"></div>
+                            <div v-else="message.type=='audio'" @click="audioPlay(index)" class="messageContent"><i class="fas fa-play"></i><div classe="playBar"></div></div>
                             
 
                             <p class="messageDate">{{message.date}}</p>

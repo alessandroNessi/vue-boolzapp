@@ -224,14 +224,15 @@ var app = new Vue ({
                 this.mediaRecorder.stop();
                 clearTimeout(this.recordingTimeOut);
                 this.recording=false;
+                this.switchTopContact();
             }
         },
 
         /**function that start video */
         startVideo(){
             let video = document.getElementById('video');
-            video.setAttribute('width', 800);
-            video.setAttribute('height', 600);
+            // video.setAttribute('width', 800);
+            // video.setAttribute('height', 600);
             if(this.recording==false){
                 document.getElementById("videoContainer").style.display="flex";
                 this.hideMessages=true;
@@ -263,8 +264,6 @@ var app = new Vue ({
                 type: 'pic'
             };
             var context = canvas.getContext('2d');
-            canvas.wid
-            console.log(context);
             context.drawImage(video, 0, 0, 800, 600);
             temp.message=canvas.toDataURL('image/png');
             this.screenMessages.push(temp);
@@ -275,9 +274,14 @@ var app = new Vue ({
                 track.stop();
             });
             this.mediaRecorder="";
-            // var data = canvas.toDataURL('image/png');
-            // photo.setAttribute('src', data);
+            this.switchTopContact();
+            var data = canvas.toDataURL('image/png');
+            photo.setAttribute('src', data);
         },
+
+        
+
+        /**show the pic and ask if you wanna keep */
 
         /**start the play of the audio item in the selected index */
         audioPlay(index){

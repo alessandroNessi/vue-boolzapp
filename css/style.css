@@ -275,34 +275,29 @@ main .hiddenMenu .fas{
 .messageImg{
     width: 15.75rem;
     border-radius: 5px;
-    /* margin-left: 50px; */
 }
 #videoContainer{
     display: none;
     position: relative;
     flex-direction: column;
     align-items: center;
-    background-color: lightcoral;
+    background-color:rgb(229, 221, 213);
     width: 100%;
-    height: 100%;
 }
 #video{
     width: 100%;
-    height: 50%;
-    background-color: lightgreen;
+    border-radius: 5px;
 }
 #canvas{
     width: 100%;
-    height: 50%;
-    background-color: paleturquoise;
 }
 .d-none{
     display: none;
 }
 #videoContainer .cameraButton{
     position: absolute;
-    top: 50%;
-    margin-top: -25px;
+    top: 100%;
+    margin-top: -35px;
     background-color: palegreen;
     display: flex;
     justify-content: center;
