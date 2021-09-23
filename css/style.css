@@ -239,10 +239,6 @@ main{
 .message:hover .hiddenMenu{
     display: block;
 }
-/* .message:hover .hiddenMenu .fas{
-    transition-duration: all 1s;
-    opacity: 1;
-} */
 main .hiddenMenu{
     position: absolute;
     right: .625rem;
@@ -264,22 +260,26 @@ main .hiddenMenu li{
 main .hiddenMenu .fas{
     color: #b6b9bb;
     font-size: .875rem;
-    /* opacity: 0; */
 }
 .playBar{
     height: .25rem;
     border-radius: .125rem;
     width: 4.375rem;
-    /* margin: auto; */
     background-color: lightblue;
 }
 
 /* debug style */
-.messageContainer>*{
+/* .messageContainer>*{
     display: none;
+} */
+.messageImg{
+    width: 15.75rem;
+    border-radius: 5px;
+    /* margin-left: 50px; */
 }
 #videoContainer{
-    display: flex;
+    display: none;
+    position: relative;
     flex-direction: column;
     align-items: center;
     background-color: lightcoral;
@@ -288,19 +288,20 @@ main .hiddenMenu .fas{
 }
 #video{
     width: 100%;
-    height: 33%;
+    height: 50%;
     background-color: lightgreen;
 }
 #canvas{
     width: 100%;
-    height: 33%;
+    height: 50%;
     background-color: paleturquoise;
 }
-.output{
-    width: 100%;
-    height: 33%;
+.d-none{
+    display: none;
 }
 #videoContainer .cameraButton{
+    position: absolute;
+    top: 50%;
     margin-top: -25px;
     background-color: palegreen;
     display: flex;

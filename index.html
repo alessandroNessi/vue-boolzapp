@@ -73,7 +73,7 @@
                             <div class="smallCircle"><img class="avatarImg" :src="'media/avatar'+userResponding.avatar+'.jpg'" alt="myImage1"></div>
                             <div class="textContainer">
                                 <h4>{{userResponding.name}}</h4>
-                                <p class="subtitle">Ultimo accesso alle 19.46</p>
+                                <p class="subtitle">Online</p>
                             </div>
                         </div>
                         <div class="options"><i class="fas fa-search"></i><i class="fas fa-paperclip"></i><i class="fas fa-ellipsis-v"></i></div>
@@ -81,21 +81,21 @@
 
                     <!-- MESSAGECONTAINER -->
                     <div class="messageContainer">
-                        <div id="videoContainer">
+                        <div id="videoContainer" class="d-none">
                             <video id="video">
 
                             </video>
-                            <div class="smallCircle cameraButton">
-                                <i id="startButton" @click="takePic()" class="fas fa-camera"></i>
+                            <div @click="takePic()" class="smallCircle cameraButton">
+                                <i id="startButton"  class="fas fa-camera"></i>
                             </div>
-                            <canvas id="canvas">
+                            <canvas class="d-none" id="canvas">
                             </canvas>
                             <div class="output">
-                              <img id="photo" alt="The screen capture will appear in this box."> 
+                              <img id="photo" alt="The screen capture will appear in this box.">
                             </div>
 
                         </div>
-                        <div @mouseleave="hideFunctions(index)" class="message" v-for="(message, index) in screenMessages" :key="index" :class="'message '+message.status">
+                        <div @mouseleave="hideFunctions(index)"  v-for="(message, index) in screenMessages" :key="index" :class="'message '+message.status+' '+(hideMessages?'d-none':'')">
                             <div v-if="!sameStatusPrevMsg(index)" class="triangle__msg" :class="{triangle__sent: message.status=='sent', triangle__received: message.status=='received'}"></div>
                             <div class="hiddenMenu">
                                 <i class="fas fa-ellipsis-v" @click="showHiddenMenu(index)"></i>
@@ -105,7 +105,10 @@
                                 </ul>
                             </div>
                             <p v-if="message.type=='text'" class="messageContent">{{message.message}}</p>
-                            <p @click="audioPlay(index)" v-else-if="message.type=='audio'" class="messageContent"><i class="fas fa-play"></i><div classe="playBar"></div></p>
+                            <p v-else="message.type=='pic'" class="messageContent"><img :src="message.message" class="messageImg"></p>
+                            <!-- <p v-else-if="message.type=='audio'" @click="audioPlay(index)" class="messageContent"><i class="fas fa-play"></i><div classe="playBar"></div></p> -->
+                            
+
                             <p class="messageDate">{{message.date}}</p>
                         </div>
                     </div>

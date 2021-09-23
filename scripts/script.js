@@ -4,6 +4,7 @@ var app = new Vue ({
 
     //*******************DATA
     data:{
+        hideMessages: false,
         userResponding:{},
         mediaRecorder:{},
         screenMessages:[{}],
@@ -228,28 +229,21 @@ var app = new Vue ({
 
         /**function that start video */
         startVideo(){
-            // var width = 320;
-            // var height = 0;
-            var streaming = false;
             let video = document.getElementById('video');
-            let canvas = document.getElementById('canvas');
-            let photo = document.getElementById('photo');
-            let startbutton = document.getElementById('startButton');
-            let temp = {
-                date: this.getCurrentTime(),
-                status: 'sent',
-                type: 'pic'
-            };
+            video.setAttribute('width', 800);
+            video.setAttribute('height', 600);
             if(this.recording==false){
+                document.getElementById("videoContainer").style.display="flex";
+                this.hideMessages=true;
                 this.recording=true;
                 navigator.mediaDevices.getUserMedia({ video: true, audio: false })
-                    .then(function (stream) {
+                    .then(stream => {
                         this.mediaRecorder = stream;
-                        // video.srcObject = stream;
                         video.srcObject = this.mediaRecorder;
                         video.play();
                     })
                     .catch(function (err) {//cattura il rifiuto alla camera
+                        this.hideMessages=false;
                         this.recording=false;
                         console.log("An error occurred: " + err);
                 });
@@ -258,32 +252,31 @@ var app = new Vue ({
 
         /**function that take a pic */
         takePic(){
-            // var width = 320;
-            // var height = 0;
-            var streaming = false;
             let video = document.getElementById('video');
             let canvas = document.getElementById('canvas');
+            canvas.setAttribute('width', 800);
+            canvas.setAttribute('height', 600);
             let photo = document.getElementById('photo');
-            let startbutton = document.getElementById('startButton');
             let temp = {
                 date: this.getCurrentTime(),
                 status: 'sent',
                 type: 'pic'
             };
-            if(this.recording==false){
-                this.recording=true;
-                navigator.mediaDevices.getUserMedia({ video: true, audio: false })
-                    .then(function (stream) {
-                        this.mediaRecorder = stream;
-                        // video.srcObject = stream;
-                        video.srcObject = this.mediaRecorder;
-                        video.play();
-                    })
-                    .catch(function (err) {//cattura il rifiuto alla camera
-                        this.recording=false;
-                        console.log("An error occurred: " + err);
-                });
-            }
+            var context = canvas.getContext('2d');
+            canvas.wid
+            console.log(context);
+            context.drawImage(video, 0, 0, 800, 600);
+            temp.message=canvas.toDataURL('image/png');
+            this.screenMessages.push(temp);
+            document.getElementById("videoContainer").style.display="none";
+            this.hideMessages=false;
+            this.recording=false;
+            this.mediaRecorder.getTracks().forEach(function (track) {
+                track.stop();
+            });
+            this.mediaRecorder="";
+            // var data = canvas.toDataURL('image/png');
+            // photo.setAttribute('src', data);
         },
 
         /**start the play of the audio item in the selected index */
