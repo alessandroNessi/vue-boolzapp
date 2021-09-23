@@ -89,7 +89,8 @@
                                     <li @click="deleteMessage(index)">Cancella messaggio</li>
                                 </ul>
                             </div>
-                            <p class="messageContent">{{message.message}}</p>
+                            <p v-if="message.type=='text'" class="messageContent">{{message.message}}</p>
+                            <p @click="audioPlay(index)" v-else-if="message.type=='audio'" class="messageContent"><i class="fas fa-play"></i><div classe="playBar"></div></p>
                             <p class="messageDate">{{message.date}}</p>
                         </div>
                     </div>
@@ -98,7 +99,7 @@
                     <div class="messageInputForm alignSons">
                         <span><i class="far fa-smile"></i></span>
                         <input id="messageInput" @keyup.enter="sendMessage()" type="text" placeholder="Scrivi un messaggio">
-                        <span><i class="fas fa-microphone"></i></span>
+                        <span><i @click="recordAudio()" class="fas fa-microphone"></i></span>
                     </div>
                 </main>
             </div>   

@@ -1,30 +1,37 @@
+// var audioObj= new Audio;
 var app = new Vue ({
     el:"#root",
     data:{
         userResponding:{},
+        mediaRecorder:{},
         screenMessages:[{}],
         filteredContacts: [{}],
         selectedIndex:0,
+        recording: false,
         contacts: [
             {
                 name: 'Michele',
                 avatar: '_1',
                 visible: true,
+                // audioObj: new Audio,
                 messages: [
                     {
                         date: '10/01/2020 15:30:55',
                         message: 'Hai portato a spasso il cane?',
-                        status: 'sent'
+                        status: 'sent',
+                        type: 'text'
                     },
                     {
                         date: '10/01/2020 15:50:00',
                         message: 'Ricordati di dargli da mangiare',
-                        status: 'sent'
+                        status: 'sent',
+                        type: 'text'
                     },
                     {
                         date: '10/01/2020 16:15:22',
                         message: 'Tutto fatto!',
-                        status: 'received'
+                        status: 'received',
+                        type: 'text'
                     }
                 ],
             },
@@ -35,17 +42,20 @@ var app = new Vue ({
                 messages: [{
                     date: '20/03/2020 16:30:00',
                     message: 'Ciao come stai?',
-                    status: 'sent'
+                    status: 'sent',
+                    type: 'text'
                 },
                     {
                         date: '20/03/2020 16:30:55',
                         message: 'Bene grazie! Stasera ci vediamo?',
-                        status: 'received'
+                        status: 'received',
+                        type: 'text'
                     },
                     {
                         date: '20/03/2020 16:35:00',
                         message: 'Mi piacerebbe ma devo andare a fare la spesa.',
-                        status: 'received'
+                        status: 'received',
+                        type: 'text'
                     }
                 ],
             },
@@ -56,17 +66,20 @@ var app = new Vue ({
                 messages: [{
                     date: '28/03/2020 10:10:40',
                     message: 'La Marianna va in campagna',
-                    status: 'received'
+                    status: 'received',
+                    type: 'text'
                 },
                     {
                         date: '28/03/2020 10:20:10',
                         message: 'Sicuro di non aver sbagliato chat?',
-                        status: 'sent'
+                        status: 'sent',
+                        type: 'text'
                     },
                     {
                         date: '28/03/2020 16:15:22',
                         message: 'Ah scusa!',
-                        status: 'received'
+                        status: 'received',
+                        type: 'text'
                     }
                 ],
             },
@@ -77,12 +90,14 @@ var app = new Vue ({
                 messages: [{
                     date: '10/01/2020 15:30:55',
                     message: 'Lo sai che ha aperto una nuova pizzeria?',
-                    status: 'sent'
+                    status: 'sent',
+                    type: 'text'
                 },
                     {
                         date: '10/01/2020 15:50:00',
                         message: 'Si, ma preferirei andare al cinema',
-                        status: 'received'
+                        status: 'received',
+                        type: 'text'
                     }
                 ],
             },
@@ -102,7 +117,8 @@ var app = new Vue ({
                 this.screenMessages.push({
                     date: this.getCurrentTime(),
                     message: currentMessage,
-                    status: 'sent'
+                    status: 'sent',
+                    type: 'text'
                 });
                 let temp="scusa non ho capito";
                 if(currentMessage.includes("come stai")||currentMessage.includes("come va")){
@@ -146,6 +162,39 @@ var app = new Vue ({
         },
         deleteMessage(index){
             this.screenMessages.splice(index,1);
+        },
+        recordAudio(){
+            if(this.recording==false){
+                this.recording=true;
+                let temp = {
+                    date: this.getCurrentTime(),
+                    status: 'sent',
+                    type: 'audio'
+                };
+                navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
+                        this.mediaRecorder = new MediaRecorder(stream);
+                        this.mediaRecorder.start();
+                        const audioChunks = [];
+                        this.mediaRecorder.addEventListener("dataavailable", event => {
+                            audioChunks.push(event.data);
+                        });
+                        this.mediaRecorder.addEventListener("stop", () => {
+                            const audioBlob = new Blob(audioChunks);
+                            const audioUrl = URL.createObjectURL(audioBlob);
+                            temp.message= new Audio(audioUrl);
+                            this.screenMessages.push(temp);
+                        });
+                        setTimeout(() => {
+                            this.mediaRecorder.stop();
+                            this.recording=false;
+                        }, 10000);
+                    });
+            }else{
+                this.mediaRecorder.stop();
+            }
+        },
+        audioPlay(index){
+            this.screenMessages[index].message.play();
         }
     },
     created (){

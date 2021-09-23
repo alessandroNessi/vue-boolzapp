@@ -246,3 +246,10 @@ main .hiddenMenu .fas{
     font-size: .875rem;
     /* opacity: 0; */
 }
+.playBar{
+    height: 4px;
+    border-radius: 2px;
+    width: 70px;
+    /* margin: auto; */
+    background-color: lightblue;
+}
