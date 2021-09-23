@@ -195,7 +195,8 @@ var app = new Vue ({
                     status: 'sent',
                     type: 'audio'
                 };
-                navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
+                navigator.mediaDevices.getUserMedia({ audio: true })
+                    .then(stream => {
                         this.mediaRecorder = new MediaRecorder(stream);
                         this.mediaRecorder.start();
                         const audioChunks = [];
@@ -213,6 +214,10 @@ var app = new Vue ({
                             this.mediaRecorder.stop();
                             this.recording=false;
                         }, 30000);
+                    })
+                    .catch((err)=>{
+                        this.recording=false;
+                        console.log("An error occurred: " + err);
                     });
             }else{
                 this.mediaRecorder.stop();
@@ -221,31 +226,64 @@ var app = new Vue ({
             }
         },
 
-        takePic(){
+        /**function that start video */
+        startVideo(){
+            // var width = 320;
+            // var height = 0;
+            var streaming = false;
+            let video = document.getElementById('video');
+            let canvas = document.getElementById('canvas');
+            let photo = document.getElementById('photo');
+            let startbutton = document.getElementById('startButton');
             let temp = {
                 date: this.getCurrentTime(),
                 status: 'sent',
                 type: 'pic'
             };
-            navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
-                    this.mediaRecorder = new MediaRecorder(stream);
-                    this.mediaRecorder.start();
-                    const audioChunks = [];
-                    this.mediaRecorder.addEventListener("dataavailable", event => {
-                        audioChunks.push(event.data);
-                    });
-                    this.mediaRecorder.addEventListener("stop", () => {
-                        const audioBlob = new Blob(audioChunks);
-                        const audioUrl = URL.createObjectURL(audioBlob);
-                        temp.message= new Audio(audioUrl);
-                        this.screenMessages.push(temp);
-                        this.switchTopContact();
-                    });
-                    this.recordingTimeOut = setTimeout(() => {
-                        this.mediaRecorder.stop();
+            if(this.recording==false){
+                this.recording=true;
+                navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+                    .then(function (stream) {
+                        this.mediaRecorder = stream;
+                        // video.srcObject = stream;
+                        video.srcObject = this.mediaRecorder;
+                        video.play();
+                    })
+                    .catch(function (err) {//cattura il rifiuto alla camera
                         this.recording=false;
-                    }, 30000);
+                        console.log("An error occurred: " + err);
                 });
+            }
+        },
+
+        /**function that take a pic */
+        takePic(){
+            // var width = 320;
+            // var height = 0;
+            var streaming = false;
+            let video = document.getElementById('video');
+            let canvas = document.getElementById('canvas');
+            let photo = document.getElementById('photo');
+            let startbutton = document.getElementById('startButton');
+            let temp = {
+                date: this.getCurrentTime(),
+                status: 'sent',
+                type: 'pic'
+            };
+            if(this.recording==false){
+                this.recording=true;
+                navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+                    .then(function (stream) {
+                        this.mediaRecorder = stream;
+                        // video.srcObject = stream;
+                        video.srcObject = this.mediaRecorder;
+                        video.play();
+                    })
+                    .catch(function (err) {//cattura il rifiuto alla camera
+                        this.recording=false;
+                        console.log("An error occurred: " + err);
+                });
+            }
         },
 
         /**start the play of the audio item in the selected index */

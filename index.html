@@ -82,11 +82,16 @@
                     <!-- MESSAGECONTAINER -->
                     <div class="messageContainer">
                         <div id="videoContainer">
-                            <div id="canvasContainer">
+                            <video id="video">
 
-                            </div>
+                            </video>
                             <div class="smallCircle cameraButton">
-                                <i class="fas fa-camera"></i>
+                                <i id="startButton" @click="takePic()" class="fas fa-camera"></i>
+                            </div>
+                            <canvas id="canvas">
+                            </canvas>
+                            <div class="output">
+                              <img id="photo" alt="The screen capture will appear in this box."> 
                             </div>
 
                         </div>
@@ -108,7 +113,7 @@
                     <!-- MESSAGEINPUT -->
                     <div class="messageInputForm alignSons">
                         <div class="messageInputFormLeft"><i class="far fa-smile"></i></div>
-                        <div><i @click="takePic()" class="fas fa-paperclip"></i></div>
+                        <div><i @click="startVideo()" class="fas fa-paperclip"></i></div>
                         <input id="messageInput" @keyup.enter="sendMessage()" type="text" placeholder="Scrivi un messaggio">
                         <div><i @click="recordAudio()" class="fas fa-microphone"></i></div>
                     </div>

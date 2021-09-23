@@ -286,13 +286,22 @@ main .hiddenMenu .fas{
     width: 100%;
     height: 100%;
 }
-#canvasContainer{
+#video{
     width: 100%;
-    height: 80%;
+    height: 33%;
     background-color: lightgreen;
 }
+#canvas{
+    width: 100%;
+    height: 33%;
+    background-color: paleturquoise;
+}
+.output{
+    width: 100%;
+    height: 33%;
+}
 #videoContainer .cameraButton{
-    margin-top: -20px;
+    margin-top: -25px;
     background-color: palegreen;
     display: flex;
     justify-content: center;
