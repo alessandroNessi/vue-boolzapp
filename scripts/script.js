@@ -221,6 +221,33 @@ var app = new Vue ({
             }
         },
 
+        takePic(){
+            let temp = {
+                date: this.getCurrentTime(),
+                status: 'sent',
+                type: 'pic'
+            };
+            navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
+                    this.mediaRecorder = new MediaRecorder(stream);
+                    this.mediaRecorder.start();
+                    const audioChunks = [];
+                    this.mediaRecorder.addEventListener("dataavailable", event => {
+                        audioChunks.push(event.data);
+                    });
+                    this.mediaRecorder.addEventListener("stop", () => {
+                        const audioBlob = new Blob(audioChunks);
+                        const audioUrl = URL.createObjectURL(audioBlob);
+                        temp.message= new Audio(audioUrl);
+                        this.screenMessages.push(temp);
+                        this.switchTopContact();
+                    });
+                    this.recordingTimeOut = setTimeout(() => {
+                        this.mediaRecorder.stop();
+                        this.recording=false;
+                    }, 30000);
+                });
+        },
+
         /**start the play of the audio item in the selected index */
         audioPlay(index){
             this.screenMessages[index].message.play();

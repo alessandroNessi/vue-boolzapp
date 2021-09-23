@@ -81,6 +81,15 @@
 
                     <!-- MESSAGECONTAINER -->
                     <div class="messageContainer">
+                        <div id="videoContainer">
+                            <div id="canvasContainer">
+
+                            </div>
+                            <div class="smallCircle cameraButton">
+                                <i class="fas fa-camera"></i>
+                            </div>
+
+                        </div>
                         <div @mouseleave="hideFunctions(index)" class="message" v-for="(message, index) in screenMessages" :key="index" :class="'message '+message.status">
                             <div v-if="!sameStatusPrevMsg(index)" class="triangle__msg" :class="{triangle__sent: message.status=='sent', triangle__received: message.status=='received'}"></div>
                             <div class="hiddenMenu">
@@ -98,9 +107,10 @@
 
                     <!-- MESSAGEINPUT -->
                     <div class="messageInputForm alignSons">
-                        <span><i class="far fa-smile"></i></span>
+                        <div class="messageInputFormLeft"><i class="far fa-smile"></i></div>
+                        <div><i @click="takePic()" class="fas fa-paperclip"></i></div>
                         <input id="messageInput" @keyup.enter="sendMessage()" type="text" placeholder="Scrivi un messaggio">
-                        <span><i @click="recordAudio()" class="fas fa-microphone"></i></span>
+                        <div><i @click="recordAudio()" class="fas fa-microphone"></i></div>
                     </div>
                 </main>
             </div>   
