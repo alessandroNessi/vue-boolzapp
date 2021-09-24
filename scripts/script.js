@@ -12,7 +12,7 @@ var app = new Vue ({
         selectedIndex:0,
         recording: false,//used to don't call the .stop() ok audio if mediaRecorder is listening a video event 
         recordingTimeOut:{},
-        hidingInputOptions:true,//used to toggle input menu with paperclip
+        showInputOptions:false,//used to toggle input menu with paperclip
         contacts: [
             {
                 name: 'Michele',

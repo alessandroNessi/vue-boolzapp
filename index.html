@@ -116,18 +116,18 @@
                     <!-- MESSAGEINPUT -->
                     <div class="messageInputForm alignSons">
                         <div class="messageInputFormLeft"><i class="far fa-smile"></i></div>
-                        <div id="inputPaperclipContainer" @click="(hidingInputOptions)?hidingInputOptions=false:hidingInputOptions=true">
+                        <div id="inputPaperclipContainer" @click="(showInputOptions)?showInputOptions=false:showInputOptions=true">
                             <i class="fas fa-paperclip"></i>
-                            <div v-if="hidingInputOptions" id="inputOptionsContainer">
+                            <div v-if="showInputOptions" id="inputOptionsContainer">
                                 <div class="smallCircle"><i @click="startVideo()" class="fas fa-camera"></i></div>
                                 <div class="smallCircle"><i class="fas fa-video"></i></div>
                                 <div class="smallCircle"><i class="fas fa-user"></i></div>
                             </div>
                         </div>
                         <input id="messageInput" @keyup.enter="sendMessage()" type="text" placeholder="Scrivi un messaggio">
-                        <div>
+                        <div class="startStopAudioWidth">
                             <i v-if="recording!='audio'" @click="recordAudio()" class="fas fa-microphone"></i>
-                            <i v-else @click="recordAudio()" class="fas fa-microphone"></i>
+                            <i v-else-if="recording=='audio'" @click="recordAudio()" class="stopAudio fas fa-square"></i>
                         </div>
                     </div>
                 </main>
