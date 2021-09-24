@@ -10,9 +10,9 @@ var app = new Vue ({
         screenMessages:[{}],
         filteredContacts: [{}],
         selectedIndex:0,
-        recording: false,
+        recording: false,//used to don't call the .stop() ok audio if mediaRecorder is listening a video event 
         recordingTimeOut:{},
-        hidingInputOptions:true,
+        hidingInputOptions:true,//used to toggle input menu with paperclip
         contacts: [
             {
                 name: 'Michele',
@@ -191,7 +191,7 @@ var app = new Vue ({
         /**record an audio and put it in the user's messages, has 30s timeout can be stopped by clicking again on it */
         recordAudio(){
             if(this.recording==false){
-                this.recording=true;
+                this.recording='audio';
                 let temp = {
                     date: this.getCurrentTime(),
                     status: 'sent',
@@ -221,7 +221,7 @@ var app = new Vue ({
                         this.recording=false;
                         console.log("An error occurred: " + err);
                     });
-            }else{
+            }else if(this.recording=='audio'){
                 this.mediaRecorder.stop();
                 clearTimeout(this.recordingTimeOut);
                 this.recording=false;
@@ -232,12 +232,10 @@ var app = new Vue ({
         /**function that start video */
         startVideo(){
             let video = document.getElementById('video');
-            // video.setAttribute('width', 800);
-            // video.setAttribute('height', 600);
             if(this.recording==false){
                 document.getElementById("videoContainer").style.display="flex";
                 this.hideMessages=true;
-                this.recording=true;
+                this.recording='video';
                 navigator.mediaDevices.getUserMedia({ video: true, audio: false })
                     .then(stream => {
                         this.mediaRecorder = stream;
@@ -280,9 +278,8 @@ var app = new Vue ({
             photo.setAttribute('src', data);
         },
 
-        
-
         /**show the pic and ask if you wanna keep */
+        /**still to do */
 
         /**start the play of the audio item in the selected index */
         audioPlay(index){
