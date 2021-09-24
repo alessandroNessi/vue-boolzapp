@@ -82,10 +82,11 @@
                     <!-- MESSAGECONTAINER -->
                     <div class="messageContainer">
                         <div id="videoContainer">
-                            <video id="video"></video>
+                            <video id="video" muted></video>
+                            <video id="preview" width="160" height="120" controls></video>
                             <div class="smallCircle cameraButton">
                                 <i v-if="!videoOrPic" @mouseup="takePic()" class="fas fa-camera"></i>
-                                <i v-else-if="videoOrPic" @mouseup="recordVideo()" class="fas fa-video"></i>
+                                <i v-else-if="videoOrPic" @mouseup="recordVideo(), " class="fas fa-video"></i>
                             </div>
                             <canvas class="d-none" id="canvas">
                             </canvas>

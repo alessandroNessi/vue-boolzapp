@@ -234,8 +234,9 @@ var app = new Vue ({
                         document.getElementById("videoContainer").style.display="flex";
                         this.hideMessages=true;
                         this.recording='video';
-                        this.mediaRecorder = stream;
-                        video.srcObject = this.mediaRecorder;
+                        this.stream=stream;
+                        this.mediaRecorder = new MediaRecorder(this.stream);
+                        video.srcObject = this.stream;
                         video.play();
                         var context = canvas.getContext('2d');
                         context.drawImage(video, 0, 0, 800, 600);
@@ -250,42 +251,30 @@ var app = new Vue ({
 
 /**RECORD VIDEO */
         recordVideo(){
-            let video = document.getElementById('video');
-            let canvas = document.getElementById('canvas');
-            canvas.setAttribute('width', 800);
-            canvas.setAttribute('height', 600);
-            const FPS = 25;
             let temp = {
                 date: dayjs().format(`DD/MM/YYYY HH:MM:ss`),
                 status: 'sent',
-                type: 'audio'
+                type: 'video'
             };
-            canvas = canvas.captureStream(FPS);
-            let MR = new MediaRecorder(this.mediaRecorder);
-            this.stream=this.mediaRecorder;
-            this.mediaRecorder=MR;
             let mediaChunks = [];
             this.mediaRecorder.ondataavailable = function(event) {
                 mediaChunks.push(event.data);
             }
             this.mediaRecorder.start();
             this.mediaRecorder.addEventListener("stop", () => {
-                // const audioBlob = new Blob(audioChunks);
-                // const audioUrl = URL.createObjectURL(audioBlob);
-                // temp.message= new Audio(audioUrl);
+                let video_local = URL.createObjectURL(new Blob(mediaChunks, { type: "video/webm" }));
+                document.getElementById("preview").src = video_local;
+                temp.message = video_local;
                 this.screenMessages.push(temp);
                 this.switchTopContact();
             });
             this.recordingTimeOut = setTimeout(() => {
-                console.log(this.mediaRecorder);
                 this.mediaRecorder.stop();
-                console.log(this.mediaRecorder);
                 this.recording=false;
                 this.stream.getTracks().forEach(function (track) {
                     track.stop();
                 });
-            }, 3000);
-// remove the stop button
+            }, 30000);
         },
 
 /**TAKES PIC*/
@@ -306,10 +295,10 @@ var app = new Vue ({
             document.getElementById("videoContainer").style.display="none";
             this.hideMessages=false;
             this.recording=false;
-            this.mediaRecorder.getTracks().forEach(function (track) {
+            this.stream.getTracks().forEach(function (track) {
                 track.stop();
             });
-            this.mediaRecorder="";
+            this.stream="";
             this.switchTopContact();
         },
 
