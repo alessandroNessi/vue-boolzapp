@@ -12,6 +12,7 @@ var app = new Vue ({
         selectedIndex:0,
         recording: false,
         recordingTimeOut:{},
+        hidingInputOptions:true,
         contacts: [
             {
                 name: 'Michele',

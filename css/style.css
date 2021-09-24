@@ -51,6 +51,9 @@ input{
     border-radius: 1.5625rem;
     overflow: hidden;
     cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .mediumCircle{
     width: 3.75rem;
@@ -302,4 +305,16 @@ main .hiddenMenu .fas{
     display: flex;
     justify-content: center;
     align-items: center;
+}
+#inputPaperclipContainer{
+    position: relative;
+}
+#inputOptionsContainer{
+    position: absolute;
+    bottom: 70px;
+    transform: translate(-25%, 0);
+}
+#inputOptionsContainer .smallCircle{
+    background: linear-gradient(#8bd5cd 50%, #b8d5b1 50%);;
+    margin-top: 15px;
 }
