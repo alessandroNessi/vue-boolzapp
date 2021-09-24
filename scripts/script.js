@@ -6,6 +6,7 @@ var app = new Vue ({
         hideMessages: false,
         userResponding:{},
         mediaRecorder:{},
+        stream: {},
         screenMessages:[{}],
         filteredContacts: [{}],
         selectedIndex:0,
@@ -228,7 +229,7 @@ var app = new Vue ({
         startVideo(){
             let video = document.getElementById('video');
             if(this.recording==false){
-                navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+                navigator.mediaDevices.getUserMedia({ video: true, audio: true })
                     .then(stream => {
                         document.getElementById("videoContainer").style.display="flex";
                         this.hideMessages=true;
@@ -236,6 +237,8 @@ var app = new Vue ({
                         this.mediaRecorder = stream;
                         video.srcObject = this.mediaRecorder;
                         video.play();
+                        var context = canvas.getContext('2d');
+                        context.drawImage(video, 0, 0, 800, 600);
                     })
                     .catch(function (err) {//cattura il rifiuto alla camera
                         this.hideMessages=false;
@@ -247,44 +250,42 @@ var app = new Vue ({
 
 /**RECORD VIDEO */
         recordVideo(){
-            if(this.recording==false){
-                this.recording='waiting answer';
-                let temp = {
-                    date: dayjs().format(`DD/MM/YYYY HH:MM:ss`),
-                    status: 'sent',
-                    type: 'audio'
-                };
-                navigator.mediaDevices.getUserMedia({ audio: true })
-                    .then(stream => {
-                        this.recording='audio';
-                        this.mediaRecorder = new MediaRecorder(stream);
-                        this.mediaRecorder.start();
-                        const audioChunks = [];
-                        this.mediaRecorder.addEventListener("dataavailable", event => {
-                            audioChunks.push(event.data);
-                        });
-                        this.mediaRecorder.addEventListener("stop", () => {
-                            const audioBlob = new Blob(audioChunks);
-                            const audioUrl = URL.createObjectURL(audioBlob);
-                            temp.message= new Audio(audioUrl);
-                            this.screenMessages.push(temp);
-                            this.switchTopContact();
-                        });
-                        this.recordingTimeOut = setTimeout(() => {
-                            this.mediaRecorder.stop();
-                            this.recording=false;
-                        }, 30000);
-                    })
-                    .catch((err)=>{
-                        this.recording=false;
-                        console.log("An error occurred: " + err);
-                    });
-            }else if(this.recording=='audio'){
-                this.mediaRecorder.stop();
-                clearTimeout(this.recordingTimeOut);
-                this.recording=false;
-                this.switchTopContact();
+            let video = document.getElementById('video');
+            let canvas = document.getElementById('canvas');
+            canvas.setAttribute('width', 800);
+            canvas.setAttribute('height', 600);
+            const FPS = 25;
+            let temp = {
+                date: dayjs().format(`DD/MM/YYYY HH:MM:ss`),
+                status: 'sent',
+                type: 'audio'
+            };
+            canvas = canvas.captureStream(FPS);
+            let MR = new MediaRecorder(this.mediaRecorder);
+            this.stream=this.mediaRecorder;
+            this.mediaRecorder=MR;
+            let mediaChunks = [];
+            this.mediaRecorder.ondataavailable = function(event) {
+                mediaChunks.push(event.data);
             }
+            this.mediaRecorder.start();
+            this.mediaRecorder.addEventListener("stop", () => {
+                // const audioBlob = new Blob(audioChunks);
+                // const audioUrl = URL.createObjectURL(audioBlob);
+                // temp.message= new Audio(audioUrl);
+                this.screenMessages.push(temp);
+                this.switchTopContact();
+            });
+            this.recordingTimeOut = setTimeout(() => {
+                console.log(this.mediaRecorder);
+                this.mediaRecorder.stop();
+                console.log(this.mediaRecorder);
+                this.recording=false;
+                this.stream.getTracks().forEach(function (track) {
+                    track.stop();
+                });
+            }, 3000);
+// remove the stop button
         },
 
 /**TAKES PIC*/
@@ -293,7 +294,6 @@ var app = new Vue ({
             let canvas = document.getElementById('canvas');
             canvas.setAttribute('width', 800);
             canvas.setAttribute('height', 600);
-            let photo = document.getElementById('photo');
             let temp = {
                 date: dayjs().format(`DD/MM/YYYY HH:MM:ss`),
                 status: 'sent',
