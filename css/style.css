@@ -9,7 +9,7 @@
         outline: none;
     }
     .d-none{
-        display: none;
+        display: none !important;
     }
     body{
         background: linear-gradient(#009688 15%, #d7dbd6 15%);
@@ -54,9 +54,11 @@
         border-radius: 1.5625rem;
         overflow: hidden;
         cursor: pointer;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        text-align: center;
+    }
+    .smallCircle .fas{
+        line-height: 3.125rem;;
+        width: 100%;
     }
     .mediumCircle{
         width: 3.75rem;

@@ -81,19 +81,14 @@
 
                     <!-- MESSAGECONTAINER -->
                     <div class="messageContainer">
-                        <div id="videoContainer" class="d-none">
-                            <video id="video">
-
-                            </video>
-                            <div @click="takePic()" class="smallCircle cameraButton">
-                                <i id="startButton"  class="fas fa-camera"></i>
+                        <div id="videoContainer">
+                            <video id="video"></video>
+                            <div class="smallCircle cameraButton">
+                                <i v-if="!videoOrPic" @mouseup="takePic()" class="fas fa-camera"></i>
+                                <i v-else-if="videoOrPic" @mouseup="recordVideo()" class="fas fa-video"></i>
                             </div>
                             <canvas class="d-none" id="canvas">
                             </canvas>
-                            <div class="output d-none">
-                              <img id="photo" alt="The screen capture will appear in this box.">
-                            </div>
-
                         </div>
                         <div @mouseleave="hideFunctions(index)"  v-for="(message, index) in screenMessages" :key="index" :class="'message '+message.status+' '+(hideMessages?'d-none':'')">
                             <div v-if="!sameStatusPrevMsg(index)" class="triangle__msg" :class="{triangle__sent: message.status=='sent', triangle__received: message.status=='received'}"></div>
@@ -119,8 +114,8 @@
                         <div id="inputPaperclipContainer" @click="(showInputOptions)?showInputOptions=false:showInputOptions=true">
                             <i class="fas fa-paperclip"></i>
                             <div v-if="showInputOptions" id="inputOptionsContainer">
-                                <div class="smallCircle"><i @click="startVideo()" class="fas fa-camera"></i></div>
-                                <div class="smallCircle"><i class="fas fa-video"></i></div>
+                                <div class="smallCircle"><i @click="startVideo(), videoOrPic=false" class="fas fa-camera"></i></div>
+                                <div class="smallCircle"><i @click="startVideo(), videoOrPic=true"  class="fas fa-video"></i></div>
                                 <div class="smallCircle"><i class="fas fa-user"></i></div>
                             </div>
                         </div>

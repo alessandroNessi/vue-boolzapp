@@ -10,6 +10,7 @@ var app = new Vue ({
         filteredContacts: [{}],
         selectedIndex:0,
         recording: false,//used to don't call the .stop() ok audio if mediaRecorder is listening a video event 
+        videoOrPic: true, //false=video true=pic
         recordingTimeOut:{},
         showInputOptions:false,//used to toggle input menu with paperclip
         contacts: [
@@ -223,15 +224,15 @@ var app = new Vue ({
             }
         },
 
-        /**function that start video */
+/**START VIDEO */
         startVideo(){
             let video = document.getElementById('video');
             if(this.recording==false){
-                document.getElementById("videoContainer").style.display="flex";
-                this.hideMessages=true;
-                this.recording='video';
                 navigator.mediaDevices.getUserMedia({ video: true, audio: false })
                     .then(stream => {
+                        document.getElementById("videoContainer").style.display="flex";
+                        this.hideMessages=true;
+                        this.recording='video';
                         this.mediaRecorder = stream;
                         video.srcObject = this.mediaRecorder;
                         video.play();
@@ -244,7 +245,49 @@ var app = new Vue ({
             }
         },
 
-        /**function that take a pic */
+/**RECORD VIDEO */
+        recordVideo(){
+            if(this.recording==false){
+                this.recording='waiting answer';
+                let temp = {
+                    date: dayjs().format(`DD/MM/YYYY HH:MM:ss`),
+                    status: 'sent',
+                    type: 'audio'
+                };
+                navigator.mediaDevices.getUserMedia({ audio: true })
+                    .then(stream => {
+                        this.recording='audio';
+                        this.mediaRecorder = new MediaRecorder(stream);
+                        this.mediaRecorder.start();
+                        const audioChunks = [];
+                        this.mediaRecorder.addEventListener("dataavailable", event => {
+                            audioChunks.push(event.data);
+                        });
+                        this.mediaRecorder.addEventListener("stop", () => {
+                            const audioBlob = new Blob(audioChunks);
+                            const audioUrl = URL.createObjectURL(audioBlob);
+                            temp.message= new Audio(audioUrl);
+                            this.screenMessages.push(temp);
+                            this.switchTopContact();
+                        });
+                        this.recordingTimeOut = setTimeout(() => {
+                            this.mediaRecorder.stop();
+                            this.recording=false;
+                        }, 30000);
+                    })
+                    .catch((err)=>{
+                        this.recording=false;
+                        console.log("An error occurred: " + err);
+                    });
+            }else if(this.recording=='audio'){
+                this.mediaRecorder.stop();
+                clearTimeout(this.recordingTimeOut);
+                this.recording=false;
+                this.switchTopContact();
+            }
+        },
+
+/**TAKES PIC*/
         takePic(){
             let video = document.getElementById('video');
             let canvas = document.getElementById('canvas');
@@ -268,8 +311,6 @@ var app = new Vue ({
             });
             this.mediaRecorder="";
             this.switchTopContact();
-            var data = canvas.toDataURL('image/png');
-            photo.setAttribute('src', data);
         },
 
         /**show the pic and ask if you wanna keep */
