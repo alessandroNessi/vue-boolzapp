@@ -1,4 +1,3 @@
-// var audioObj= new Audio;
 var app = new Vue ({
     el:"#root",
 
@@ -127,7 +126,7 @@ var app = new Vue ({
             let currentMessage = document.getElementById("messageInput").value;
             if(currentMessage!=""){
                 this.screenMessages.push({
-                    date: this.getCurrentTime(),
+                    date: dayjs().format(`DD/MM/YYYY HH:MM:ss`),
                     message: currentMessage,
                     status: 'sent',
                     type: 'text'
@@ -144,7 +143,7 @@ var app = new Vue ({
                 }
                 setTimeout(()=>{
                     this.screenMessages.push({
-                        date: this.getCurrentTime(),
+                        date: dayjs().format(`DD/MM/YYYY HH:MM:ss`),
                         message: temp,
                         status: 'received',
                         type: 'text'
@@ -153,12 +152,6 @@ var app = new Vue ({
                 document.getElementById("messageInput").value="";
                 this.switchTopContact();
             }
-        },
-
-        /**return current time */
-        getCurrentTime(){
-            var today = new Date();
-            return (today.getDate()+'/'+(today.getMonth()+1)+'/'+today.getFullYear() +"  "+today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds());
         },
 
         /**filter user based on the top left input search form */
@@ -193,7 +186,7 @@ var app = new Vue ({
             if(this.recording==false){
                 this.recording='waiting answer';
                 let temp = {
-                    date: this.getCurrentTime(),
+                    date: dayjs().format(`DD/MM/YYYY HH:MM:ss`),
                     status: 'sent',
                     type: 'audio'
                 };
@@ -259,7 +252,7 @@ var app = new Vue ({
             canvas.setAttribute('height', 600);
             let photo = document.getElementById('photo');
             let temp = {
-                date: this.getCurrentTime(),
+                date: dayjs().format(`DD/MM/YYYY HH:MM:ss`),
                 status: 'sent',
                 type: 'pic'
             };
