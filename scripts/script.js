@@ -191,7 +191,7 @@ var app = new Vue ({
         /**record an audio and put it in the user's messages, has 30s timeout can be stopped by clicking again on it */
         recordAudio(){
             if(this.recording==false){
-                this.recording='audio';
+                this.recording='waiting answer';
                 let temp = {
                     date: this.getCurrentTime(),
                     status: 'sent',
@@ -199,6 +199,7 @@ var app = new Vue ({
                 };
                 navigator.mediaDevices.getUserMedia({ audio: true })
                     .then(stream => {
+                        this.recording='audio';
                         this.mediaRecorder = new MediaRecorder(stream);
                         this.mediaRecorder.start();
                         const audioChunks = [];

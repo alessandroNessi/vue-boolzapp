@@ -125,7 +125,10 @@
                             </div>
                         </div>
                         <input id="messageInput" @keyup.enter="sendMessage()" type="text" placeholder="Scrivi un messaggio">
-                        <div><i @click="recordAudio()" class="fas fa-microphone"></i></div>
+                        <div>
+                            <i v-if="recording!='audio'" @click="recordAudio()" class="fas fa-microphone"></i>
+                            <i v-else @click="recordAudio()" class="fas fa-microphone"></i>
+                        </div>
                     </div>
                 </main>
             </div>   
