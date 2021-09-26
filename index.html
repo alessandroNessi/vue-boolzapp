@@ -83,13 +83,12 @@
                     <div class="messageContainer">
                         <div id="videoContainer">
                             <video id="video" muted></video>
-                            <!-- <video id="preview" width="160" height="120" controls></video> -->
                             <div class="smallCircle cameraButton">
                                 <i v-if="!videoOrPic" @mouseup="takePic()" class="fas fa-camera"></i>
                                 <i v-else-if="videoOrPic && recording!='videoStarted'" @mouseup="recordVideo()" class="fas fa-video"></i>
-                                <i v-else @mouseup="stopRecordVideo()" class="stopButton fas fa-square"></i>
+                                <i v-else @mouseup="mediaRecorder.stop()" class="stopButton fas fa-square"></i>
                             </div>
-                            <canvas class="d-none" id="canvas">
+                            <canvas class="d-none" id="canvas" width="1024" height="768">
                             </canvas>
                         </div>
                         <div @mouseleave="hideFunctions(index)"  v-for="(message, index) in screenMessages" :key="index" :class="'message '+message.status+' '+(hideMessages?'d-none':'')">
@@ -123,7 +122,7 @@
                         <input id="messageInput" @keyup.enter="sendMessage()" type="text" placeholder="Scrivi un messaggio">
                         <div class="startStopAudioWidth">
                             <i v-if="recording!='audio'" @click="recordAudio()" class="fas fa-microphone"></i>
-                            <i v-else-if="recording=='audio'" @click="recordAudio()" class="stopAudio fas fa-square"></i>
+                            <i v-else-if="recording=='audio'" @click="mediaRecorder.stop()" class="stopAudio fas fa-square"></i>
                         </div>
                     </div>
                 </main>

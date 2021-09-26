@@ -3,17 +3,38 @@ var app = new Vue ({
 
     //*******************DATA
     data:{
+        //if false the message are shown in the messagebox, if true show the videocontainer form
         hideMessages: false,
+
+        //is the user wich we selected
         userResponding:{},
+
+        //global mediarecorder object for audio and video recording
         mediaRecorder:{},
+
+        //global stream object for video recrding
         stream: {},
+
+        //messages shown on screen right now
         screenMessages:[{}],
+
+        //contacts we selected during dinamic filtering
         filteredContacts: [{}],
+
+        //the contact's index, set as 0 at first so we autoselect the first contact on open
         selectedIndex:0,
-        recording: false,//used to don't call the .stop() ok audio if mediaRecorder is listening a video event 
-        videoOrPic: true, //false=video true=pic
+
+        //used to don't call the .stop() ok audio if mediaRecorder is listening a video event 
+        recording: false,
+
+        //false=video true=pic, used to toggle the videocamera or photocamera icon with both different methods
+        videoOrPic: true,
+        
+        //global timeout on record so we can stop it when called in a different method (30s on both audio and video)
         recordingTimeOut:{},
-        showInputOptions:false,//used to toggle input menu with paperclip
+
+        //used to toggle input menu with paperclip
+        showInputOptions:false,
         contacts: [
             {
                 name: 'Michele',
@@ -133,6 +154,8 @@ var app = new Vue ({
                     status: 'sent',
                     type: 'text'
                 });
+
+                /**different answers */
                 let temp="scusa non ho capito";
                 if(currentMessage.includes("come stai")||currentMessage.includes("come va")){
                     temp="ciao, sto bene, tu?";
@@ -143,6 +166,8 @@ var app = new Vue ({
                 }else if(currentMessage.includes("a bird")||currentMessage.includes("la parola")||currentMessage.includes("the word")||currentMessage.includes("un uccello")){
                     temp="well everybody knows that the bird is the word!";
                 }
+
+                /**answer timeout */
                 setTimeout(()=>{
                     this.screenMessages.push({
                         date: dayjs().format(`DD/MM/YYYY HH:MM:ss`),
@@ -192,22 +217,37 @@ var app = new Vue ({
                     status: 'sent',
                     type: 'audio'
                 };
+                //set media device on audio and get data stream
                 navigator.mediaDevices.getUserMedia({ audio: true })
                     .then(stream => {
                         this.recording='audio';
+                        //set a recording obj with audio data stream passed
                         this.mediaRecorder = new MediaRecorder(stream);
+                        //start recording
                         this.mediaRecorder.start();
                         const audioChunks = [];
+                        //for each chunk of data we push it in our Datachunks
                         this.mediaRecorder.addEventListener("dataavailable", event => {
                             audioChunks.push(event.data);
                         });
+                        //when we stop the audio i add an event wich:
                         this.mediaRecorder.addEventListener("stop", () => {
+                            //1) create a blob on chunks
                             const audioBlob = new Blob(audioChunks);
+                            //2) create an url that points at blob
                             const audioUrl = URL.createObjectURL(audioBlob);
+                            //3) push the audiourl as message in the messages obj associated with the current user
                             temp.message= new Audio(audioUrl);
                             this.screenMessages.push(temp);
+                            //4) the user we sent the message is now the top user in the list
                             this.switchTopContact();
+                            //5)clear the timeout
+                            clearTimeout(this.recordingTimeOut);
+                            //save in the global recording i'm not recording anymmore
+                            this.recording=false;
                         });
+
+                        //30s timeout
                         this.recordingTimeOut = setTimeout(() => {
                             this.mediaRecorder.stop();
                             this.recording=false;
@@ -217,29 +257,31 @@ var app = new Vue ({
                         this.recording=false;
                         console.log("An error occurred: " + err);
                     });
-            }else if(this.recording=='audio'){
-                this.mediaRecorder.stop();
-                clearTimeout(this.recordingTimeOut);
-                this.recording=false;
-                this.switchTopContact();
             }
         },
 
 /**START VIDEO */
         startVideo(){
-            let video = document.getElementById('video');
+            //if not recording
             if(this.recording==false){
+                let video = document.getElementById('video');
+                //i select mediadevice camera and mic
                 navigator.mediaDevices.getUserMedia({ video: true, audio: true })
                     .then(stream => {
+                        //i show the videomonitor
                         document.getElementById("videoContainer").style.display="flex";
+                        //and hide messages
                         this.hideMessages=true;
+                        //tells globally i am on video event
                         this.recording='video';
+                        //assign the data stream to a global data
                         this.stream=stream;
+                        //assign the global mediaRecorde the stream on data
                         this.mediaRecorder = new MediaRecorder(this.stream);
+                        //assign the stream of data to the video preview with button video below
                         video.srcObject = this.stream;
+                        //and play the datastream
                         video.play();
-                        var context = canvas.getContext('2d');
-                        context.drawImage(video, 0, 0, 800, 600);
                     })
                     .catch(function (err) {//cattura il rifiuto alla camera
                         this.hideMessages=false;
@@ -257,61 +299,72 @@ var app = new Vue ({
                 type: 'video'
             };
             let mediaChunks = [];
+            //push the chunks from the stream in it's array
             this.mediaRecorder.ondataavailable = function(event) {
                 mediaChunks.push(event.data);
             }
-            this.recording='videoStarted';    
+            //i tell globally that i'm recording (used to cahnge icon from camera do square)
+            this.recording='videoStarted';
+            //start recprdomg both audio and video
             this.mediaRecorder.start();
+            //on stop recording:
             this.mediaRecorder.addEventListener("stop", () => {
+                //i created an url from blob->made of chunks as for audio
                 let video_local = URL.createObjectURL(new Blob(mediaChunks, { type: "video/webm" }));
+                //stop the stream
                 this.stream.getTracks().forEach(function (track) {
                     track.stop();
                 });
+                //hide the video
                 document.getElementById("videoContainer").style.display="none";
+                //show messages
                 this.hideMessages=false;
-                this.recording=false;       
+                //tells globally i'm no longer recording
+                this.recording=false;
+                //clear the dimeout of 30s
                 clearTimeout(this.recordingTimeOut);
-                // document.getElementById("preview").src = video_local;
+                // clear the stream
                 this.stream="";
+                //set the video as message and put it in the user's messages
                 temp.message = video_local;
                 this.screenMessages.push(temp);
+                //put user on top
                 this.switchTopContact();
             });
+            //30s timeout
             this.recordingTimeOut = setTimeout(() => {
                 this.mediaRecorder.stop();
-                this.recording=false;
-                this.stream.getTracks().forEach(function (track) {
-                    track.stop();
-                });
-            }, 30000);
-        },
-
-        stopRecordVideo(){
-            this.mediaRecorder.stop();
+            }, 3000);
         },
 
 /**TAKES PIC*/
         takePic(){
             let video = document.getElementById('video');
             let canvas = document.getElementById('canvas');
-            canvas.setAttribute('width', 800);
-            canvas.setAttribute('height', 600);
             let temp = {
                 date: dayjs().format(`DD/MM/YYYY HH:MM:ss`),
                 status: 'sent',
                 type: 'pic'
             };
+            //devine 2d context for canvas
             var context = canvas.getContext('2d');
-            context.drawImage(video, 0, 0, 800, 600);
+            //draw image currently shown on video
+            context.drawImage(video, 0, 0, 1024, 768);
+            //assign the image to the message and push it
             temp.message=canvas.toDataURL('image/png');
             this.screenMessages.push(temp);
+            //hide videocontainer
             document.getElementById("videoContainer").style.display="none";
+            //show messages
             this.hideMessages=false;
+            //tell globally i'm no logner recording
             this.recording=false;
+            //stop the stream
             this.stream.getTracks().forEach(function (track) {
                 track.stop();
             });
             this.stream="";
+            //swithch contact on top
             this.switchTopContact();
         },
 
