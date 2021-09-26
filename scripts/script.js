@@ -260,10 +260,19 @@ var app = new Vue ({
             this.mediaRecorder.ondataavailable = function(event) {
                 mediaChunks.push(event.data);
             }
+            this.recording='videoStarted';    
             this.mediaRecorder.start();
             this.mediaRecorder.addEventListener("stop", () => {
                 let video_local = URL.createObjectURL(new Blob(mediaChunks, { type: "video/webm" }));
-                document.getElementById("preview").src = video_local;
+                this.stream.getTracks().forEach(function (track) {
+                    track.stop();
+                });
+                document.getElementById("videoContainer").style.display="none";
+                this.hideMessages=false;
+                this.recording=false;       
+                clearTimeout(this.recordingTimeOut);
+                // document.getElementById("preview").src = video_local;
+                this.stream="";
                 temp.message = video_local;
                 this.screenMessages.push(temp);
                 this.switchTopContact();
@@ -275,6 +284,10 @@ var app = new Vue ({
                     track.stop();
                 });
             }, 30000);
+        },
+
+        stopRecordVideo(){
+            this.mediaRecorder.stop();
         },
 
 /**TAKES PIC*/

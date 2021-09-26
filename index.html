@@ -83,10 +83,11 @@
                     <div class="messageContainer">
                         <div id="videoContainer">
                             <video id="video" muted></video>
-                            <video id="preview" width="160" height="120" controls></video>
+                            <!-- <video id="preview" width="160" height="120" controls></video> -->
                             <div class="smallCircle cameraButton">
                                 <i v-if="!videoOrPic" @mouseup="takePic()" class="fas fa-camera"></i>
-                                <i v-else-if="videoOrPic" @mouseup="recordVideo(), " class="fas fa-video"></i>
+                                <i v-else-if="videoOrPic && recording!='videoStarted'" @mouseup="recordVideo()" class="fas fa-video"></i>
+                                <i v-else @mouseup="stopRecordVideo()" class="stopButton fas fa-square"></i>
                             </div>
                             <canvas class="d-none" id="canvas">
                             </canvas>
@@ -102,9 +103,8 @@
                             </div>
                             <div v-if="message.type=='text'" class="messageContent">{{message.message}}</div>
                             <div v-else-if="message.type=='pic'" class="messageContent"><img :src="message.message" class="messageImg"></div>
-                            <div v-else="message.type=='audio'" @click="audioPlay(index)" class="messageContent"><i class="fas fa-play"></i><div classe="playBar"></div></div>
-                            
-
+                            <div v-else-if="message.type=='audio'" @click="audioPlay(index)" class="messageContent"><i class="fas fa-play"></i><div classe="playBar"></div></div>
+                            <div v-else-if="message.type=='video'" class="messageContent"><video class="messageImg" :src="message.message" controls></video></div>
                             <p class="messageDate">{{message.date}}</p>
                         </div>
                     </div>
