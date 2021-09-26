@@ -311,25 +311,12 @@ var app = new Vue ({
             this.mediaRecorder.addEventListener("stop", () => {
                 //i created an url from blob->made of chunks as for audio
                 let video_local = URL.createObjectURL(new Blob(mediaChunks, { type: "video/webm" }));
-                //stop the stream
-                this.stream.getTracks().forEach(function (track) {
-                    track.stop();
-                });
-                //hide the video
-                document.getElementById("videoContainer").style.display="none";
-                //show messages
-                this.hideMessages=false;
-                //tells globally i'm no longer recording
-                this.recording=false;
                 //clear the dimeout of 30s
                 clearTimeout(this.recordingTimeOut);
-                // clear the stream
-                this.stream="";
-                //set the video as message and put it in the user's messages
                 temp.message = video_local;
+                //set the video as message and put it in the user's messages
                 this.screenMessages.push(temp);
-                //put user on top
-                this.switchTopContact();
+                this.switchStreamToMsg();
             });
             //30s timeout
             this.recordingTimeOut = setTimeout(() => {
@@ -353,7 +340,10 @@ var app = new Vue ({
             //assign the image to the message and push it
             temp.message=canvas.toDataURL('image/png');
             this.screenMessages.push(temp);
-            //hide videocontainer
+            this.switchStreamToMsg();
+        },
+
+        switchStreamToMsg(){
             document.getElementById("videoContainer").style.display="none";
             //show messages
             this.hideMessages=false;
