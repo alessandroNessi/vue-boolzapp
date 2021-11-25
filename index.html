@@ -30,7 +30,7 @@
                     <div class="avatar">
                         <div class="smallCircle"><img class="avatarImg" src="media/avatar_io.jpg" alt="myImage"></div>
                         <div class="textContainer">
-                            <h4>Maria Antonietta</h4>
+                            <h4>Alessandro</h4>
                         </div>
                     </div>
                     <div class="options"><i class="fas fa-circle-notch"></i><i class="fas fa-comment-alt"></i><i class="fas fa-ellipsis-v"></i></div>
@@ -95,7 +95,7 @@
                             <div v-if="!sameStatusPrevMsg(index)" class="triangle__msg" :class="{triangle__sent: message.status=='sent', triangle__received: message.status=='received'}"></div>
                             <div class="hiddenMenu">
                                 <i class="fas fa-ellipsis-v" @click="showHiddenMenu(index)"></i>
-                                <ul class="hiddenFunctions d-none">
+                                <ul class="hiddenFunctions">
                                     <li>Info messaggio</li>
                                     <li @click="deleteMessage(index)">Cancella messaggio</li>
                                 </ul>

@@ -22,6 +22,8 @@
     .container{
         width: 80%;
         height: 95%;
+        border-radius: 5px;
+        overflow: hidden;
         display: flex;
         max-width: 100rem;
     }
@@ -241,17 +243,28 @@
         text-align: end;
         display: none;
         z-index: 1;
+        border-radius: 5px;
+        overflow: hidden;
+    }
+    main .hiddenMenu li:last-child{
+        border-bottom: none;
+    }
+    main .hiddenMenu li:hover{
+        background-color: #eee;
     }
     main .hiddenMenu li{
         text-align: start;
         background-color: white;
-        border: .0625rem solid #ddd;
+        border-bottom: .0625rem solid #ddd;
         padding: .3125rem;
         cursor: pointer;
         user-select: none;
     }
     .hiddenFunctions{
         display: none;
+        border-radius: 7px;
+        border: 1px solid rgb(221, 221, 221);
+        overflow: hidden;
     }
     main .hiddenMenu .fas{
         color: #b6b9bb;
@@ -301,6 +314,10 @@
         justify-content: space-around;
         background-color: #f3eeea;
         height: 4.375rem;
+    }
+    #messageInput{
+        font-size: 18px;
+        color: rgb(34 34 34);
     }
     .messageInputForm input{
         flex-grow: 0.85;
